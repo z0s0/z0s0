@@ -1,6 +1,5 @@
 import React from 'react'
 import {Card, Divider, Tag} from 'antd'
-
 const Emoji = props => (
     <span
       className="emoji"
@@ -43,12 +42,35 @@ export const Note = ({title, type, text, tags, result}) =>{
   
 export const Notes = [
     {
+        type: "note", 
+        title: "Do not use zero-latency caches unless absolutely necessary", 
+        text: <article>
+            <p>
+              Zero-latency cache— cached data in your application's memory.
+              It is super easy to implement and handy to maintain cause you do not even need additional dependency(like Redis)
+              This cache is reliable and fast because you do not need to make network calls.
+            </p>
+            <p>
+              But only if you have single instance application.  
+            </p>
+            <p>
+              Since you have multiple instances cache invalidation strikes back and keeping all state consistent is not an easy task. Whatsoever.
+              99% You will be needed additional dependency like message bus or maybe db triggers(much worse).
+            </p>
+            <p>
+                The thing is that shared cache isn't bad in terms of performance. Network call takes less than 10ms within the cluster, you save memory and maintenance efforts.   
+            </p>
+        </article>,
+        tags: ["Redis", "Cache", "Kubernetes"],
+        result: "If you know that you application will be distributed consider difficulties of zero-latency cache maintenance. It is better to use shared cache in most cases."
+    },
+    {
         type: "note",
         title: "Maybe you do not need GraphQL. Part 1.",
         text: <article>
             <p>Consider the case. Services A exposes GQL API. Services B and C consume this API and do semantically the same thing and use the SAME queries.</p>
             <p>Believe me there are cases when 2 services really need to use the same queries and ALWAYS the same queries.</p>
-            <p>From this moment you will make efforts on versioning/sharing this queries.
+            <p>From this moment you will make efforts on versioning/sharing queries and ensure that both services use the same version.
                If you have 50+ queries to be consistent and shared between services your code is not maintainable yet. 
             </p>
             <p>Please consider simple stupid REST endpoints in this case.</p>
@@ -58,9 +80,9 @@ export const Notes = [
     },
     {
         type: "postmortem",
-        title: "Do not forget to delete TMP indexes when using REINDEX INDEX idx_name CONCURRENTLY in PostgreSQL",
+        title: "Do not forget to delete TMP indexes when using REINDEX INDEX CONCURRENTLY idx_name in PostgreSQL",
         text: <span>
-              <p>Bloating is a known disadvantage of PostgreSQL garbage collection mechanisms.
+              <p>Bloating is a known consequence of PostgreSQL MVCC model.
                  If rows updates are intensive you may decide to automate REINDEX process.</p>
               <p>
                   Fresh versions of PostgreSQL support CONCURRENTLY option.
