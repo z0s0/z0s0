@@ -1,10 +1,34 @@
 import React from 'react'
-import {Card, Divider} from 'antd'
+import {Card, Divider, Tag} from 'antd'
 
+const Emoji = props => (
+    <span
+      className="emoji"
+      role="img"
+      aria-label={props.label ? props.label : ""}
+      aria-hidden={props.label ? "false" : "true"}
+    >
+      {props.symbol}
+    </span>
+  )
+export const NoteType = ({type}) => {
+    return(
+        <span style={{minHeight: "20px", minWidth: "20px", borderRadius: "50px"}}>
+            <Emoji symbol={type === "postmortem" ? "😠" : type === "note" ? "✅" : "💡"}/>
+        </span>
+    )
+}
 export const Note = ({title, type, text, tags, result}) =>{
     const conclusion = type === "postmortem" ? "Damage" : "Conclusion"
   return (
-      <Card title={title}>
+      <Card title={
+          <span>
+            <NoteType type={type}/> &nbsp;&nbsp;
+            {title}
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            {tags && tags.map((tag, idx) => <Tag color="lime" children={tag} key={idx}/>)}
+          </span>
+      }>
           {text}
 
           {result && 
@@ -16,8 +40,7 @@ export const Note = ({title, type, text, tags, result}) =>{
       </Card>
   )
 }
-
-
+  
 export const Notes = [
     {
         type: "note",
@@ -55,10 +78,12 @@ export const Notes = [
         text: <article>
             <p>Code was tested without CONCURRENTLY option and PostgreSQL exception was missed</p>
         </article>,
-        result: "View was out of sync from query for 1 month before we spotted the problem"
+        result: "View was out of sync from query for 1 month before we spotted the problem", 
+        tags: ["PostgreSQL"]
     }, 
     {
         type: "idea", 
+        tags: ["KV Databases", "ElasticSearch"],
         title: "Use ElasticSearch as dummy key-value database",
         text: <article>
           <p>We had a very specific task— find a distributed fault-tolerant K/V storage for large JSON documents with high read RPS.</p>
@@ -74,6 +99,7 @@ export const Notes = [
     {
         type: "postmortem", 
         title: "Never use Erlang's odbc if you need its streaming API", 
+        tags: ["Erlang", "Pain"],
         text: <article>
             <p>Sometimes ODBC is the only way to connect to a database which is not popular in Elixir/Erlang world
                Apache Impala in my case. Usually a lot of data is stored in Hadoop :).

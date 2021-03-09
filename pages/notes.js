@@ -4,7 +4,12 @@ import {Divider} from 'antd'
 
 import {Note, Notes} from '../src/note'
 
-const pageDescriptionText = "Here I write small tween-like notes and postmortems from my experience. They will serve me as reminders and may be helpful to others."
+const pageDescriptionText = 
+  <article>
+    <p>Here I write small tween-like notes and postmortems from my experience. They will serve me as reminders and may be helpful to others.</p>
+    <p>Common notes marked as ✅, postmortems 😠 and ideas 💡</p>
+  </article>
+  
   export default () => 
     <div>
         <PageDescription children={pageDescriptionText}/> 
