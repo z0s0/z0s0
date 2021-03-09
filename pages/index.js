@@ -15,7 +15,11 @@ export default () => {
                         <Divider/>
                         <Link href="https://twitter.com/VladisKov"><Button>Twitter</Button></Link>
                         <Divider/>
-                        <Button type={"primary"} disabled children={"Download CV"}/>
+                        <Button 
+                          type="primary" 
+                          children="Resume"
+                          href="/VladislavKovalenko.pdf"
+                        />
                     </Col>
 
                     <Col span={19}>
