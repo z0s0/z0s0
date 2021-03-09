@@ -9,7 +9,7 @@ export default () =>
     mode="horizontal"
   >
     <Menu.Item>
-      <Link href="/me">About</Link>
+      <Link href="/">About</Link>
     </Menu.Item>
 
     <Menu.Item>
