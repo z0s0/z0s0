@@ -128,7 +128,7 @@ export const Notes = [
                So you decide to fetch selected dataset in batches. 
             </p>
             <p>
-                The problem is driver's odbc.next_batch function stores previous batch into memory :). OOM kills the app in minutes.
+                The problem is driver's odbc.next function stores previous batch into memory :). OOM kills the app in minutes.
             </p>
         </article>,
         result: "Took Python's impyla library and used Erlang Port feature to interact with fetchers from erlang. Perfect usage of erlang ports."
